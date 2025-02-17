@@ -1,0 +1,5 @@
+.address-grid {
+    display: grid;
+    grid-template-columns: 1fr auto; /* 주소 입력 필드는 최대한 넓게, 버튼은 최소 크기 */
+    gap: 10px;
+}

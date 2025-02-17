@@ -1,0 +1,118 @@
+<template>
+    <lightning-card title="창업 신청서" icon-name="custom:custom63">
+        <template  if:false={isSubmitted}>
+            <div class="form-container" >
+
+                <!-- 브랜드 명 (Picklist) -->
+                <lightning-combobox
+                    label="브랜드 명"
+                    name="Brand_Name__c"
+                    options={brandOptions}
+                    value={brand}
+                    required
+                    disabled
+                    onchange={handleChange}>
+                </lightning-combobox>
+
+                <!-- 이름 -->
+                <lightning-input
+                    type="text"
+                    label="이름"
+                    name="Name"
+                    value={name}
+                    required
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <!-- 이메일 -->
+                <lightning-input
+                    type="email"
+                    label="이메일"
+                    name="email__c"
+                    value={email}
+                    required
+                    onchange={handleChange}>
+                </lightning-input>
+
+                
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="6" padding="horizontal-small">
+                        <lightning-combobox 
+                        name="preferredState"
+                        label="희망 지역"
+                        value={preferredState}
+                        options={stateOptions}
+                        onchange={handleStateChange}>
+                    </lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="horizontal-small">
+                        <lightning-combobox                 
+                        name="preferredDistrict"
+                        label="희망 지역 상세"
+                        value={preferredDistrict}
+                        options={filteredDistricts}
+                        onchange={handleDistrictChange}
+                        disabled={isDistrictDisabled}>
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+                
+                <!-- 주소 및 우편번호 찾기 버튼 -->
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_3-of-4">
+                        <lightning-input
+                            type="text"
+                            label="주소"
+                            name="Address__c"
+                            value={address}
+                            required
+                            disabled
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-align-bottom">
+                        <lightning-button label="우편번호 찾기" onclick={handleAddressSearch}></lightning-button>
+                    </div>
+                </div>
+                <lightning-input
+                    type="text"
+                    label="상세 주소"
+                    name="Detailed_Address__c"
+                    value={detailedAddress}
+                    required
+                    disabled={isDetailedAddressDisabled}
+                    onchange={handleChange}>
+                </lightning-input>
+            
+                <!-- 추가 정보 입력 -->
+                <lightning-textarea
+                    label="추가 정보 입력"
+                    name="additionalInfo"
+                    value={additionalInfo}
+                    maxlength="200"
+                    required
+                    onchange={handleChange}>
+                </lightning-textarea>
+                <!-- 제출 버튼 -->
+                <div class="submit-container">
+                    <lightning-button 
+                        label={submitButtonLabel} 
+                        variant="brand" 
+                        onclick={handleSubmit} 
+                        disabled={isSubmitting}>
+                    </lightning-button>
+                    
+                    <template if:true={isSubmitting}>
+                        <lightning-spinner alternative-text="제출 중..." size="small"></lightning-spinner>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <template if:true={isSubmitted}>
+            <div class="success-message">
+                <p>🎉 제출이 완료되었습니다!</p>
+            </div>
+        </template>
+
+    </lightning-card>
+</template>
