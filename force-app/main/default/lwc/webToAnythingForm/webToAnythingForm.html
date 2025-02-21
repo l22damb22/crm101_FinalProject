@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="창업 신청서" icon-name="custom:custom63">
+    <lightning-card title="창업 신청서">
         <template  if:false={isSubmitted}>
             <div class="form-container" >
 
@@ -28,12 +28,21 @@
                 <lightning-input
                     type="email"
                     label="이메일"
-                    name="email__c"
+                    name="email"
                     value={email}
                     required
                     onchange={handleChange}>
                 </lightning-input>
 
+                <!-- 전화번호 -->
+                <lightning-input
+                    type="phone"
+                    label="전화번호"
+                    name="phone"
+                    value={phone}
+                    required
+                    onchange={handleChange}>
+                </lightning-input>
                 
                 <lightning-layout multiple-rows="true">
                     <lightning-layout-item size="6" padding="horizontal-small">
@@ -41,6 +50,7 @@
                         name="preferredState"
                         label="희망 지역"
                         value={preferredState}
+                        required
                         options={stateOptions}
                         onchange={handleStateChange}>
                     </lightning-combobox>
@@ -49,6 +59,7 @@
                         <lightning-combobox                 
                         name="preferredDistrict"
                         label="희망 지역 상세"
+                        required
                         value={preferredDistrict}
                         options={filteredDistricts}
                         onchange={handleDistrictChange}
@@ -63,7 +74,7 @@
                         <lightning-input
                             type="text"
                             label="주소"
-                            name="Address__c"
+                            name="address"
                             value={address}
                             required
                             disabled
@@ -77,7 +88,7 @@
                 <lightning-input
                     type="text"
                     label="상세 주소"
-                    name="Detailed_Address__c"
+                    name="detailedAddress"
                     value={detailedAddress}
                     required
                     disabled={isDetailedAddressDisabled}
@@ -110,9 +121,8 @@
         </template>
         <template if:true={isSubmitted}>
             <div class="success-message">
-                <p>🎉 제출이 완료되었습니다!</p>
+                <p>{textContent}</p>
             </div>
         </template>
-
     </lightning-card>
 </template>
